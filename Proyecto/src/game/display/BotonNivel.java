@@ -23,7 +23,7 @@ public class BotonNivel extends JLabel{
 		setLayout(new CardLayout());
 		addMouseListener(new OyenteNivel());
 		
-		JLabel nivel = new JLabel("nivel"+i);
+		JLabel nivel = new JLabel("level"+i);
 		nivel.setHorizontalAlignment(CENTER);
 		nivel.setVerticalAlignment(CENTER);
 		add(nivel);

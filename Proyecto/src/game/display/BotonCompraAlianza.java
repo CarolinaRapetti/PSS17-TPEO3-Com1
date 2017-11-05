@@ -19,7 +19,7 @@ public class BotonCompraAlianza extends BotonCompra{
 			setDisabledIcon(new ImageIcon(ImageLoader.loadImage("/Textures/BotonAlianzaAnulado.png")));
 			alianza=al;
 			addMouseListener(new OyenteCompra());
-			setearTexto("Comprar alianza con "+al);
+			setearTexto("Buy alliance with "+al);
 		}
 		
 		private class OyenteCompra implements MouseListener{
