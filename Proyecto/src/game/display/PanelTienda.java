@@ -19,6 +19,7 @@ import objeto.noAtravesable.objetoConVida.personaje.aliado.Mago;
 import objeto.noAtravesable.objetoConVida.personaje.aliado.Paladin;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;

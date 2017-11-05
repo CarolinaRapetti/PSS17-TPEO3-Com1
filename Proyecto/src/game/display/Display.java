@@ -1,7 +1,14 @@
 package game.display;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import game.Game;
@@ -28,6 +35,25 @@ public class Display {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
+		
+		JMenuBar barra= new JMenuBar();
+		JMenuItem acerca= new JMenuItem("Acerca");
+		acerca.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				JOptionPane.showMessageDialog(null, "TDP: Vicencio Florencia, Rodriguez Emanuel, Rodriguez Joaquin.\n PSS: Manuela Fernandez, Constanza Giorgetti, Carolina Rapetti",
+						"About", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		JMenuItem salir = new JMenuItem("Salir");
+		salir.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});
+		barra.add(acerca);
+		barra.add(salir);
+		frame.setJMenuBar(barra);
+		
 		
 		frame.pack();
 	}
