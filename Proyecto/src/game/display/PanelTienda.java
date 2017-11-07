@@ -28,6 +28,10 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -324,6 +328,7 @@ public class PanelTienda extends JPanel {
 		pScroll.add(panelPremios, conScroll);
 		
 		conScroll.gridy=5;
+		
 
 		JButton botonAliados = new JButton("Agregar aliado");
 		pScroll.add(botonAliados, conScroll);
@@ -346,7 +351,17 @@ public class PanelTienda extends JPanel {
 			}
 		});
 		
+		conScroll.gridy=7;
 		
+		JButton guardarPuntaje = new JButton("Guardar Puntaje");
+		pScroll.add(guardarPuntaje, conScroll);
+		guardarPuntaje.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				archivoPuntajes();
+			}
+		});
 		add(scrollPane, c);
 		
 	}
@@ -399,5 +414,43 @@ public class PanelTienda extends JPanel {
 	public String obtenerHora(){
 		java.util.Date hora= new Date();
 		return new String(""+ hora.getHours()+":"+hora.getMinutes());
+	}
+	
+	private void archivoPuntajes(){
+		String ruta = "/Puntajes/archivo.txt";
+		File archivo = new File(ruta);
+		FileWriter flwriter = null;	
+		BufferedWriter bw=null;
+	
+		if(archivo.exists()) {
+			try {
+				flwriter = new FileWriter(ruta, true);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			bw = new BufferedWriter(flwriter);
+		} else {
+			try {
+				bw = new BufferedWriter(new FileWriter(archivo));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  
+		}
+		String info=puntaje+" "+obtenerFecha()+" "+obtenerHora()+" /n"; 
+		try {
+			bw.write(info);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
