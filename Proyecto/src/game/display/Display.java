@@ -26,11 +26,15 @@ public class Display {
 	private JFrame frame;
 	private JPanel panel;
 	private UIState state;
-	private Game myGame;	
+	private Game myGame;
+	private int idiom;
+	private JMenuItem idioma,acerca,salir,puntos;
 	
 	//constructor
 	public Display(String title, int width, int height, Game g){
 
+		idiom=0;
+		
 		myGame = g;
 		
 		frame = new JFrame(title);
@@ -42,27 +46,37 @@ public class Display {
 		frame.setLocationRelativeTo(null);
 		
 		JMenuBar barra= new JMenuBar();
-		JMenuItem acerca= new JMenuItem("Acerca");
+		idioma= new JMenuItem("Idioma");
+		
+		idioma.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				Object seleccion = JOptionPane.showInputDialog(null, "Seleccione el idioma", "Idioma", JOptionPane.QUESTION_MESSAGE, null, new Object[] {"Ingles", "Castellano"}, null); 
+				idiomaSeleccionado(seleccion);			
+			}
+		});
+		
+		acerca = new JMenuItem("Acerca");		
 		acerca.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				JOptionPane.showMessageDialog(null, "TDP: Vicencio Florencia, Rodriguez Emanuel, Rodriguez Joaquin.\n PSS: Manuela Fernandez, Contanza Giorgetti, Carolina Rapetti",
-						"About", JOptionPane.INFORMATION_MESSAGE);
+						"Acerca de", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		JMenuItem salir = new JMenuItem("Salir");
+
+		salir= new JMenuItem("Salir");
 		salir.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.exit(0);
 			}
 		});
-		
-		JMenuItem puntos= new JMenuItem("Puntajes historicos");
+		puntos= new JMenuItem("Puntajes historicos");
 		puntos.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				cargarTabla();
 			}
 		});
-		
+				
+		barra.add(idioma);
 		barra.add(acerca);
 		barra.add(salir);
 		barra.add(puntos);
@@ -137,5 +151,13 @@ public class Display {
 		nuevo.setLayout(new BorderLayout());
 		nuevo.add(table.getTableHeader(), BorderLayout.PAGE_START);
 		nuevo.add(table, BorderLayout.CENTER);
+	}
+	
+	
+	private void idiomaSeleccionado(Object s){
+		
+		if(s=="Ingles"){
+			idiom=1;
+		}
 	}
 }
