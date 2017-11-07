@@ -28,6 +28,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -43,6 +45,8 @@ public class PanelTienda extends JPanel {
 	protected BotonCompraPersonaje[] personajesElfos, personajesEnanos, personajesHumanos, objetosTienda;
 	protected JPanel panelElves, panelDwarves;
 	protected LinkedList<BotonCompra> botones;
+	
+	protected int puntaje;
 
 	/**
 	 * Create the panel.
@@ -352,6 +356,7 @@ public class PanelTienda extends JPanel {
 			b.setearComprable(m);
 		}
 		labelPuntaje.setText("Score: "+p+"   Monedas: "+m);
+		puntaje=p;
 	}
 	public void setPrototype(Objeto ob){
 		prototipo=ob;
@@ -383,5 +388,16 @@ public class PanelTienda extends JPanel {
 	}
 	public void eliminarPremio(BotonCompraPremio p){
 		panelPre.remove(p);
+	}
+	
+	public String obtenerPuntaje(){ return new String(""+puntaje);}
+	public String obtenerFecha(){
+		java.util.Date fecha= new Date();
+		
+		return new String(""+ fecha.getDay()+"/"+fecha.getMonth()+"/"+fecha.getYear());
+	}
+	public String obtenerHora(){
+		java.util.Date hora= new Date();
+		return new String(""+ hora.getHours()+":"+hora.getMinutes());
 	}
 }
