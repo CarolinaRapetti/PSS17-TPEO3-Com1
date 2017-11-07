@@ -28,14 +28,13 @@ public class Display {
 	private UIState state;
 	private Game myGame;
 	private int idiom;
-	private JMenuItem idioma,acerca,salir,puntos;
+	private JMenuItem acerca,salir,puntos;
 	
 	//constructor
-	public Display(String title, int width, int height, Game g){
-
-		idiom=0;
+	public Display(String title, int width, int height, Game g, int idiom){
 		
 		myGame = g;
+		this.idiom=idiom;
 		
 		frame = new JFrame(title);
 		frame.setSize(width, height);
@@ -46,37 +45,40 @@ public class Display {
 		frame.setLocationRelativeTo(null);
 		
 		JMenuBar barra= new JMenuBar();
-		idioma= new JMenuItem("Idioma");
 		
-		idioma.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				Object seleccion = JOptionPane.showInputDialog(null, "Seleccione el idioma", "Idioma", JOptionPane.QUESTION_MESSAGE, null, new Object[] {"Ingles", "Castellano"}, null); 
-				idiomaSeleccionado(seleccion);			
-			}
-		});
+		String a,s,p;
+		if(idiom==0){
+			a="Acerca";
+			s="Salir";
+			p="Puntaje historico";			
+		}
+		else{
+			a="About";
+			s="Exit";
+			p="Score";
+		}
 		
-		acerca = new JMenuItem("Acerca");		
+		acerca = new JMenuItem(a);		
 		acerca.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				JOptionPane.showMessageDialog(null, "TDP: Vicencio Florencia, Rodriguez Emanuel, Rodriguez Joaquin.\n PSS: Manuela Fernandez, Contanza Giorgetti, Carolina Rapetti",
-						"Acerca de", JOptionPane.INFORMATION_MESSAGE);
+						a, JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 
-		salir= new JMenuItem("Salir");
+		salir= new JMenuItem(s);
 		salir.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.exit(0);
 			}
 		});
-		puntos= new JMenuItem("Puntajes historicos");
+		puntos= new JMenuItem(p);
 		puntos.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				cargarTabla();
 			}
 		});
-				
-		barra.add(idioma);
+			
 		barra.add(acerca);
 		barra.add(salir);
 		barra.add(puntos);
@@ -88,7 +90,7 @@ public class Display {
 	public void setJuego(){
 		if(panel!=null)
 			frame.remove(panel);
-		DisplayJuego d = new DisplayJuego(myGame);
+		DisplayJuego d = new DisplayJuego(myGame,idiom);
 		state = new GameState(d);
 		panel = d;
 		frame.add(panel);
@@ -108,14 +110,23 @@ public class Display {
 	}
 	
 	private void cargarTabla(){
-		String[] columnNames = {"Puntaje",
-                "Fecha",
-                "Hora"};
-		
-		DisplayJuego d = new DisplayJuego(myGame);
-		String p=d.getPanelTienda().obtenerPuntaje();
-		String f=d.getPanelTienda().obtenerFecha();
-		String h=d.getPanelTienda().obtenerHora();
+		String s,d,t;
+		if(idiom == 1){
+			s="Score";
+			d="Date";
+			t="Time";
+		}
+		else{
+			s="Puntaje";
+			d="Fecha";
+			t="Hora";
+		}
+			
+		String [] columnNames = {s,d,t};
+		DisplayJuego dj = new DisplayJuego(myGame,idiom);
+		String p=dj.getPanelTienda().obtenerPuntaje();
+		String f=dj.getPanelTienda().obtenerFecha();
+		String h=dj.getPanelTienda().obtenerHora();
 		
 		
 		Object[][] data = {
@@ -153,11 +164,4 @@ public class Display {
 		nuevo.add(table, BorderLayout.CENTER);
 	}
 	
-	
-	private void idiomaSeleccionado(Object s){
-		
-		if(s=="Ingles"){
-			idiom=1;
-		}
-	}
 }

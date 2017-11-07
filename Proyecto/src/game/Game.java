@@ -18,7 +18,7 @@ import game.gfx.ImageLoader;
 public class Game implements Runnable{
 
 	private Display display;
-	public int width,height;
+	public int width,height, idiom;
 	public String title;
 	private Logica myLogic;
 	private GraphicsManager graphicsManager;
@@ -32,10 +32,11 @@ public class Game implements Runnable{
 	
 	//Variables de prueba
 	
-	public Game(String title, int width, int height){
+	public Game(String title, int width, int height, int idiom){
 		this.width = width;
 		this.height = height;
 		this.title = title;
+		this.idiom = idiom;
 	}
 	
 	private void init(){
@@ -159,7 +160,7 @@ public class Game implements Runnable{
 	
 	public void empezarNivel(Nivel n){
 		nivel=n;
-		display = new Display(title , width , height, this);
+		display = new Display(title , width , height, this, idiom);
 		display.setJuego();
 		myLogic.generarMapa();
 		graphicsManager = new GraphicsManager(display);

@@ -21,11 +21,13 @@ public class DisplayJuego extends JPanel{
 	private Tienda tienda;
 	private PanelTienda panelTienda;
 	private int offset = 128;
+	private int idiom;
 	
 	
-	public DisplayJuego(Game g){
+	public DisplayJuego(Game g,int idiom){
 		myGame = g;
 		tienda = Tienda.getTienda(myGame.getLogica());
+		this.idiom=idiom;
 		createDisplay();
 	}
 	
@@ -33,7 +35,7 @@ public class DisplayJuego extends JPanel{
 
 		setLayout(new GridBagLayout());
 
-		panelTienda = new PanelTienda(myGame, tienda);
+		panelTienda = new PanelTienda(myGame, tienda, idiom);
 		
 		PremioManager.init(panelTienda);
 		
