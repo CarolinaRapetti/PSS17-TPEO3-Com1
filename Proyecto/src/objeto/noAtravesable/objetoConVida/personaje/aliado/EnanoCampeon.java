@@ -20,11 +20,11 @@ public class EnanoCampeon extends Aliado{
 		maxEscudo = (int)(maxVida*0.2);
 		ancho=1;
 		alto=1;
-		impacto=40;
+		impacto=30;
 		alcance=1;
 		valor=65;
 		v=new VisitorAliado(this);
-		animation = new Animation(t.getFila() * 64,t.getColumna()*64, velocidadAt, ImageLoader.campeonEnanoAtk);
+		animation = new Animation(this, t.getFila() * 64,t.getColumna()*64, velocidadAt, ImageLoader.campeonEnanoAtk);
 		animation.setYOffset(128);
 	}
 	public ObjetoNoAtravesable clone(){
