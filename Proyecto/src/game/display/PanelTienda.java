@@ -19,7 +19,6 @@ import objeto.noAtravesable.objetoConVida.personaje.aliado.Mago;
 import objeto.noAtravesable.objetoConVida.personaje.aliado.Paladin;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
@@ -28,8 +27,11 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -360,6 +362,7 @@ public class PanelTienda extends JPanel {
 		pScroll.add(panelPremios, conScroll);
 		
 		conScroll.gridy=5;
+		
 
 
 		JButton botonAliados;
@@ -394,7 +397,17 @@ public class PanelTienda extends JPanel {
 			}
 		});
 		
+		conScroll.gridy=7;
 		
+		JButton guardarPuntaje = new JButton("Guardar Puntaje");
+		pScroll.add(guardarPuntaje, conScroll);
+		guardarPuntaje.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				archivoPuntajes();
+			}
+		});
 		add(scrollPane, c);
 		
 	}
@@ -446,13 +459,39 @@ public class PanelTienda extends JPanel {
 	
 	public String obtenerPuntaje(){ return new String(""+puntaje);}
 	public String obtenerFecha(){
-		java.util.Date fecha= new Date();
+		Calendar calendar=Calendar.getInstance();
 		
-		return new String(""+ fecha.getDay()+"/"+fecha.getMonth()+"/"+fecha.getYear());
+		return new String(""+calendar.get(Calendar.DAY_OF_MONTH)+"/"+calendar.get(Calendar.MONTH)+"/"+calendar.get(Calendar.YEAR));
 	}
 	public String obtenerHora(){
-		java.util.Date hora= new Date();
-		return new String(""+ hora.getHours()+":"+hora.getMinutes());
+		Calendar calendar=Calendar.getInstance();
+		return new String(calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE)+":"+calendar.get(Calendar.SECOND));
+	}
+	
+	private void archivoPuntajes(){
+		String ruta = "res/Puntaje/archivo.txt";
+		File archivo = new File(ruta);
+		FileWriter flwriter = null;	
+		BufferedWriter bw=null;
+	
+		if(archivo.exists()) {
+			try {
+				flwriter = new FileWriter(ruta, true);
+			} catch (IOException e) {e.printStackTrace();}
+			bw = new BufferedWriter(flwriter);
+		} else {
+			try {
+				bw = new BufferedWriter(new FileWriter(archivo));
+			} catch (IOException e) {e.printStackTrace();}
+		  
+		}
+		String info=puntaje+" "+obtenerFecha()+" "+obtenerHora(); 
+		try {
+			bw.write(info);
+			bw.newLine();
+			bw.close();
+		} catch (IOException e) {e.printStackTrace();}
+		
 	}
 	public PanelTienda obtenerPanelTienda(){return this;}
 	public int obtenerIdioma(){return idiom;}
