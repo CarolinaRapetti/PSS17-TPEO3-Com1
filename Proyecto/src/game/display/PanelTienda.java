@@ -75,7 +75,7 @@ public class PanelTienda extends JPanel {
 			labelPuntaje = new JLabel("Score: 0    Money: 0");
 		else
 			labelPuntaje = new JLabel("Puntaje: 0    Monedas: 0");
-		
+
 		labelPuntaje.setHorizontalAlignment(JLabel.CENTER);
 		add(labelPuntaje, c);
 		
@@ -110,6 +110,7 @@ public class PanelTienda extends JPanel {
 		cs.ipady=10;
 		cs.fill=GridBagConstraints.BOTH;
 		
+
 		JLabel labelHumanos;
 		if(idiom==1)
 			labelHumanos = new JLabel("Humans", JLabel.CENTER);
@@ -163,11 +164,13 @@ public class PanelTienda extends JPanel {
 		c1.ipady=10;
 		c1.fill=GridBagConstraints.BOTH;
 		
+
 		JLabel labelElfos;
 		if(idiom==1)
 			labelElfos = new JLabel("Elves", JLabel.CENTER);
 		else
 			labelElfos = new JLabel("Elfos", JLabel.CENTER);
+
 		
 		panelElfos.add(labelElfos, c1);
 		
@@ -221,11 +224,13 @@ public class PanelTienda extends JPanel {
 		c2.ipady=10;
 		c2.fill=GridBagConstraints.BOTH;
 		
+
 		JLabel labelEnanos;
 		if(idiom==1)
 			labelEnanos = new JLabel("Dwarfs", JLabel.CENTER);
 		else
 			labelEnanos = new JLabel("Enanos", JLabel.CENTER);
+
 		
 		panelEnanos.add(labelEnanos, c2);
 		
@@ -281,11 +286,13 @@ public class PanelTienda extends JPanel {
 		c3.ipady=10;
 		c3.fill=GridBagConstraints.BOTH;
 		
+
 		JLabel labelOT;
 		if(idiom==1)
 			labelOT = new JLabel("Objects", JLabel.CENTER);
 		else
 			labelOT = new JLabel("Objetos", JLabel.CENTER);
+
 		
 		panelOT.add(labelOT, c3);
 		
@@ -329,11 +336,13 @@ public class PanelTienda extends JPanel {
 		c4.ipady=10;
 		c4.fill=GridBagConstraints.BOTH;
 		
+
 		JLabel labelPremios = new JLabel("Premios", JLabel.CENTER);
 		if(idiom==1)
 			labelPremios= new JLabel("Awards", JLabel.CENTER);
 		else
 			labelPremios = new JLabel("Premios", JLabel.CENTER);
+
 		
 		panelPremios.add(labelPremios, c4);
 		
@@ -352,12 +361,14 @@ public class PanelTienda extends JPanel {
 		
 		conScroll.gridy=5;
 
+
 		JButton botonAliados;
 		if(idiom==1)
 			botonAliados = new JButton("Add ally");
 		else
 			botonAliados = new JButton("Agregar aliado");
 		
+
 		pScroll.add(botonAliados, conScroll);
 		
 		conScroll.gridy=6;
@@ -367,13 +378,13 @@ public class PanelTienda extends JPanel {
 				myGame.crearAliado();
 			}
 		});
-		
+
 		JButton botonEnemigos;
 		if(idiom==1)
 			botonEnemigos = new JButton("Add enemy");
 		else
 			botonEnemigos = new JButton("Agregar enemigo");
-		
+
 		pScroll.add(botonEnemigos, conScroll);
 		botonEnemigos.addActionListener(new ActionListener() {
 			
@@ -392,12 +403,14 @@ public class PanelTienda extends JPanel {
 		for(BotonCompra b: botones){
 			b.setearComprable(m);
 		}
+
 		if(idiom==1)
 			labelPuntaje.setText("Score: "+p+"   Money: "+m);
 		else
 			labelPuntaje.setText("Puntaje: "+p+"   Monedas: "+m);
 
 		puntaje=p;
+
 	}
 	public void setPrototype(Objeto ob){
 		prototipo=ob;
