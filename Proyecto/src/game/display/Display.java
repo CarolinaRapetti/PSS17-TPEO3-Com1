@@ -3,22 +3,19 @@ package game.display;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
+import java.io.BufferedReader;
+
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
+import javax.swing.table.DefaultTableModel;
 
 import game.Game;
 import game.GameState;
@@ -100,48 +97,39 @@ public class Display {
 
 	
 	private void cargarTabla(){
-		String[] columnNames = {"Puntaje",
-                "Fecha",
-                "Hora"};
+		String ruta = "res/Puntaje/archivo.txt";
+		File archivo = new File(ruta);
+		FileReader flwreader = null;	
+		BufferedReader br=null;
 		
-		DisplayJuego d = new DisplayJuego(myGame);
-		String p=d.getPanelTienda().obtenerPuntaje();
-		String f=d.getPanelTienda().obtenerFecha();
-		String h=d.getPanelTienda().obtenerHora();
+		JTable tabla = new JTable();
+		DefaultTableModel modelo = (DefaultTableModel)tabla.getModel();
+		modelo.addColumn("Puntaje");
+		modelo.addColumn("Fecha");
+		modelo.addColumn("Hora");
+		tabla.setSize(450, 400);
 		
-		
-		Object[][] data = {
-			    {p,f,h},
-			    {"1220", "01/11/2017",
-			     "12:30"},
-			    {"470", "29/10/2017",
-			     "15:00"},
-			    {"5000", "20/10/2017",
-			     "16:40"},
-			    {"900", "11/10/2017",
-			     "14:25"},
-			    {"20", "09/10/2017",
-			     "04:00"},
-			    {"100", "07/10/2017",
-			     "13:32"},
-			    {"90", "03/10/2017",
-			     "01:20"},
-			    {"990", "21/09/2017",
-			     "20:38"},
-			    {"10", "18/09/2017",
-			     "11:11"},
-			};
-		
-		JTable table = new JTable(data, columnNames);
+		if(archivo.exists()) 
+			try {
+				flwreader = new FileReader(archivo);
+				br = new BufferedReader(flwreader);
+				String line=br.readLine();
+				while(line!=null){					
+					String[] data=line.split(" ");
+					modelo.addRow(data);
+					line=br.readLine();				
+				}
 				
-		table.setSize(450, 400);		
+				br.close();
+			} catch (IOException e) {e.printStackTrace();}		
+						
 		
 		JFrame nuevo = new JFrame("Puntajes Historicos");
 		nuevo.setVisible(true);
 		nuevo.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		nuevo.setSize(450, 400);
 		nuevo.setLayout(new BorderLayout());
-		nuevo.add(table.getTableHeader(), BorderLayout.PAGE_START);
-		nuevo.add(table, BorderLayout.CENTER);
+		nuevo.add(tabla.getTableHeader(), BorderLayout.PAGE_START);
+		nuevo.add(tabla, BorderLayout.CENTER);
 	}
 }
